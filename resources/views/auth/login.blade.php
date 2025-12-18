@@ -96,7 +96,7 @@ resources/views/auth/login.blade.php FUNGSI: Halaman form login
                         ================== --}} {{-- Tombol ini akan diaktifkan di Hari 4
                         --}}
                         <div class="d-grid gap-2">
-                            <a href="#" class="btn btn-outline-danger">
+                            <a href="{{ route('auth.google') }}" class="btn btn-outline-danger">
                                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20"
                                     class="me-2" />
                                 Login dengan Google
