@@ -20,8 +20,6 @@ Route::get('/products/{slug}', [CatalogController::class, 'show'])->name('catalo
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::middleware('auth')->group(function () {
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
