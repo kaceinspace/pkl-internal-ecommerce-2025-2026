@@ -1,15 +1,24 @@
 <?php
+// ================================================
+// FILE: routes/web.php
+// FUNGSI: Definisi semua route website
+// ================================================
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
-use Illuminate\Support\Facades\Route;
+// ================================================
+// HALAMAN PUBLIK (Tanpa Login)
+// ================================================
 
 // Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -18,10 +27,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/products', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/products/{slug}', [CatalogController::class, 'show'])->name('catalog.show');
 
-Auth::routes();
+// ================================================
+// HALAMAN YANG BUTUH LOGIN (Customer)
+// ================================================
 
 Route::middleware('auth')->group(function () {
-
+    // Keranjang Belanja
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::patch('/cart/{item}', [CartController::class, 'update'])->name('cart.update');
@@ -39,51 +50,40 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 
-    // Semua route di dalam group ini HARUS LOGIN
+    // Profil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::delete('/profile/avatar', [ProfileController::class, 'deleteAvatar'])->name('profile.avatar.destroy');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
 
 });
 
 // ================================================
-// ROUTE KHUSUS ADMIN
-// ================================================
-// middleware(['auth', 'admin']) = Harus login DAN harus admin
-// prefix('admin')               = Semua URL diawali /admin
-// name('admin.')                = Semua nama route diawali admin.
+// HALAMAN ADMIN (Butuh Login + Role Admin)
 // ================================================
 
-Route::middleware(['auth', 'admin'])
-    ->prefix('admin')
-    ->name('admin.')
-    ->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    // Dashboard
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        // /admin/dashboard
-        Route::get('/dashboard', [DashboardController::class, 'dashboard'])
-            ->name('dashboard');
-        // ↑ Nama lengkap route: admin.dashboard
-        // ↑ URL: /admin/dashboard
+    // Kategori CRUD
+    Route::resource('categories', CategoryController::class)->except(['show']);
+    // Produk CRUD
+    Route::resource('products', ProductController::class);
 
-        // CRUD Produk: /admin/products, /admin/products/create, dll
-        Route::resource('/products', ProductController::class);
-        // Produk CRUD
-        Route::resource('products', AdminProductController::class);
+    // Manajemen Pesanan
+    Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
+    Route::patch('/orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.updateStatus');
+});
 
-        // Kategori CRUD
-        Route::resource('categories', AdminCategoryController::class);
+// ================================================
+// AUTH ROUTES (dari Laravel UI)
+// ================================================
+Auth::routes();
 
-        // Manajemen Pesanan
-        Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
-        Route::get('/orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
-        Route::patch('/orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.updateStatus');
-
-    });
-
-// ========================================
-// FILE: routes/web.php (tambahan untuk Google OAuth)
-// ========================================
+use Illuminate\Support\Facades\Route;
 
 // ================================================
 // GOOGLE OAUTH ROUTES

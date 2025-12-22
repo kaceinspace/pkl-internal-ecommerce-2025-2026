@@ -54,7 +54,7 @@ FUNGSI: Master layout untuk halaman customer/publik
     {{-- ============================================
     FOOTER
     ============================================ --}}
-    @include('x.footer')
+    @include('partials.footer')
 
     {{-- Stack untuk JS tambahan per halaman --}}
     @stack('scripts')

@@ -52,14 +52,13 @@ resources/views/auth/login.blade.php FUNGSI: Halaman form login
 <div class="container py-5">
     <div class="row justify-content-center align-items-center min-vh-100">
         <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center">
-            <img src="https://cdn.jsdelivr.net/gh/undraw/undraw@master/static/undraw_secure_login_pdn4.svg"
-                alt="Login Illustration" class="img-fluid w-75 rounded-4 shadow-lg"
-                style="background:rgba(255,255,255,0.2);" loading="lazy">
+            <img src="https://www.svgrepo.com/show/424993/security.svg" alt="Login Illustration"
+                class="img-fluid w-75 rounded-4 shadow-lg" style="background:rgba(255,255,255,0.2);" loading="lazy">
         </div>
         <div class="col-lg-5 col-md-8">
             <div class="login-glass p-5 animate__animated animate__fadeInDown">
                 <div class="text-center mb-4">
-                    <img src="{{ asset('favicon.ico') }}" width="48" class="mb-2" alt="Logo">
+                    <img src="https://www.svgrepo.com/show/424993/security.svg" width="48" class="mb-2" alt="Logo">
                     <h3 class="fw-bold mb-1" style="color:#2563eb">Selamat Datang!</h3>
                     <p class="text-muted">Masuk ke akun kamu untuk mulai belanja.</p>
                 </div>
@@ -118,8 +117,9 @@ resources/views/auth/login.blade.php FUNGSI: Halaman form login
                             <span
                                 class="d-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm me-2"
                                 style="width:36px;height:36px;">
-                                <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="22" height="22"
-                                    alt="Google" />
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/google.svg" width="22"
+                                    height="22" alt="Google"
+                                    onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg';" />
                             </span>
                             <span class="flex-grow-1 text-center fw-semibold" style="color:#2563eb;">Login dengan
                                 Google</span>
