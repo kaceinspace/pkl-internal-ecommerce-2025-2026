@@ -77,6 +77,6 @@
 </div>
 
 <div class="mt-3">
-    {{ $products->links() }}
+    {{ $products->links('pagination::bootstrap-5') }}
 </div>
 @endsection
