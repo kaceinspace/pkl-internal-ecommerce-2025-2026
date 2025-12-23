@@ -87,7 +87,7 @@
 
                         {{-- Description --}}
                         <p class="mb-4">
-                            {{ $product->description ?: '-' }}
+                            {!! $product->description ?: '-' !!}
                         </p>
 
                         {{-- Meta --}}
