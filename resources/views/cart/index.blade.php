@@ -62,7 +62,7 @@ FUNGSI: Halaman keranjang belanja
                                     </form>
                                 </td>
                                 <td class="text-end align-middle fw-bold">
-                                    Rp {{ number_format($item->subtotal, 0, ',', '.') }}
+                                    Rp {{ number_format($item->subtotal ?? $item->total_price, 0, ',', '.') }}
                                 </td>
                                 <td class="align-middle">
                                     <form action="{{ route('cart.remove', $item->id) }}" method="POST">
@@ -91,13 +91,15 @@ FUNGSI: Halaman keranjang belanja
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
                         <span>Total Harga ({{ $cart->items->sum('quantity') }} barang)</span>
-                        <span>Rp {{ number_format($cart->items->sum('subtotal'), 0, ',', '.') }}</span>
+                        <span>Rp {{ number_format($cart->items->sum(function($i){return $i->subtotal ??
+                            $i->total_price;}), 0, ',', '.') }}</span>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between mb-3">
                         <span class="fw-bold">Total</span>
                         <span class="fw-bold text-primary fs-5">
-                            Rp {{ number_format($cart->items->sum('subtotal'), 0, ',', '.') }}
+                            Rp {{ number_format($cart->items->sum(function($i){return $i->subtotal ??
+                            $i->total_price;}), 0, ',', '.') }}
                         </span>
                     </div>
                     <a href="{{ route('checkout.index') }}" class="btn btn-primary w-100 btn-lg">

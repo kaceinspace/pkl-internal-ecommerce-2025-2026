@@ -64,4 +64,12 @@ class CartItem extends Model
         });
     }
 
+    /**
+     * Agar $item->subtotal di view tidak 0, fallback ke total_price
+     */
+    public function getSubtotalAttribute()
+    {
+        return $this->total_price;
+    }
+
 }
