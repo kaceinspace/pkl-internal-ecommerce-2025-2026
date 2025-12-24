@@ -35,23 +35,25 @@ return new class extends Migration
                 'cancelled',  // Dibatalkan
             ])->default('pending');
 
-// Alamat pengiriman (snapshot saat order)
+            // Alamat pengiriman (snapshot saat order)
             $table->string('shipping_name');
             $table->string('shipping_phone', 20);
             $table->text('shipping_address');
 
-// Metode pembayaran
+            // Metode pembayaran
             $table->string('payment_method')->nullable();
 
-// Catatan dari pembeli
+            // Catatan dari pembeli
             $table->text('notes')->nullable();
 
-            $table->timestamps();
-
-// Index untuk query
+            // Index untuk query
             $table->index('order_number');
             $table->index('status');
             $table->index('created_at');
+
+            $table->enum('payment_status', ['unpaid', 'paid', 'failed'])->default('unpaid');
+            $table->string('snap_token')->nullable();
+            $table->timestamps();
 
         });
     }

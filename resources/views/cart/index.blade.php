@@ -91,15 +91,14 @@ FUNGSI: Halaman keranjang belanja
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
                         <span>Total Harga ({{ $cart->items->sum('quantity') }} barang)</span>
-                        <span>Rp {{ number_format($cart->items->sum(function($i){return $i->subtotal ??
-                            $i->total_price;}), 0, ',', '.') }}</span>
+                        <span>Rp {{ number_format($cart->items->sum(fn($item) => $item->subtotal), 0, ',', '.')
+                            }}</span>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between mb-3">
                         <span class="fw-bold">Total</span>
                         <span class="fw-bold text-primary fs-5">
-                            Rp {{ number_format($cart->items->sum(function($i){return $i->subtotal ??
-                            $i->total_price;}), 0, ',', '.') }}
+                            Rp {{ number_format($cart->items->sum(fn($item) => $item->subtotal), 0, ',', '.') }}
                         </span>
                     </div>
                     <a href="{{ route('checkout.index') }}" class="btn btn-primary w-100 btn-lg">
