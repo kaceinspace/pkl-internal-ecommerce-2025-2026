@@ -19,16 +19,17 @@ class Order extends Model
         'shipping_address',
         'payment_status',
         'snap_token',
-        'status',
     ];
+
+    // ==================== RELATIONSHIPS ====================
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function items()
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }

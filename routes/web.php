@@ -6,7 +6,6 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CatalogController;
@@ -14,6 +13,9 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MidtransNotificationController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductController as AdminProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
 // ================================================
@@ -25,7 +27,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Katalog Produk
 Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
-Route::get('/products', [CatalogController::class, 'index'])->name('catalog.index');
+Route::get('/products', [ProductController::class, 'index'])->name('product.index');
 Route::get('/products/{slug}', [CatalogController::class, 'show'])->name('catalog.show');
 
 // ================================================
@@ -77,7 +79,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Kategori CRUD
     Route::resource('categories', CategoryController::class)->except(['show']);
     // Produk CRUD
-    Route::resource('products', ProductController::class);
+    Route::resource('products', AdminProductController::class);
 
     // Manajemen Pesanan
     Route::get('/orders/{order}/pay', [PaymentController::class, 'show'])
